@@ -12,9 +12,8 @@ namespace Full_GRASP_And_SOLID.Library
     public class Recipe
     {
         private ArrayList steps = new ArrayList();
-
+        
         public Product FinalProduct { get; set; }
-
         public void AddStep(Step step)
         {
             this.steps.Add(step);
@@ -25,14 +24,22 @@ namespace Full_GRASP_And_SOLID.Library
             this.steps.Remove(step);
         }
 
-        public void PrintRecipe()
+        public ArrayList GetSteps()
         {
-            Console.WriteLine($"Receta de {this.FinalProduct.Description}:");
+            return this.steps;
+        }
+
+        /* cree el metodo GetProductionCost para calcular el total de los subtotales de todos los renglones, tambien por expert
+        ya que Recipe es la clase que conoce todos los renglones */
+        public double GetProductionCost()
+        {
+            double total = 0;
             foreach (Step step in this.steps)
             {
-                Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
-                    $"usando '{step.Equipment.Description}' durante {step.Time}");
-            }
-        }
+                double subTotal = step.subTotal();
+                total = total + subTotal;
+            } 
+            return total;
+        }  
     }
 }
